@@ -4,14 +4,15 @@ import Card from './Card'
 
 let Endpoint = () => {
 
-    const getInfo = async () => {
-        let response = await fetch('https://jsonplaceholder.typicode.com/comments');
-        let json = await response.json();
-        // setComments(json)
-        makeCards(json)
-    }
-
+    
     useEffect(() => {
+        const getInfo = async () => {
+            let response = await fetch('https://jsonplaceholder.typicode.com/comments');
+            let json = await response.json();
+            // setComments(json)
+            makeCards(json)
+        }
+        
         getInfo()
     }, [])
 

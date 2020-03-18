@@ -6,25 +6,26 @@ let Detail = (props) => {
 
     const [card, getCard] = useState([])
 
-    const getSpecific = async () => {
-        let response = await fetch(`https://jsonplaceholder.typicode.com/comments/${props.match.params.id}`)
+    const getSpecific = async (id) => {
+        let response = await fetch(`https://jsonplaceholder.typicode.com/comments/${id}`)
         let json = await response.json();
+        const makeCard = (json) => {
+            getCard(<Card property1={`${json.email}, Id: ${json.id}`}
+                property2={
+                    <div className="card-text">
+                        <h4 >{json.name}</h4>
+                        <p>{json.body}</p>
+                        <p>{json.email}</p>
+                    </div>}
+                property3={<Link className="btn btn-danger" to="/">Go Back</Link>} />)
+        }
         makeCard(json)
     }
 
-    const makeCard = (json) => {
-        getCard(<Card property1={`${json.email}, Id: ${json.id}`}
-            property2={
-                <div className="card-text">
-                    <h4 >{json.name}</h4>
-                    <p>{json.body}</p>
-                </div>}
-            property3={<Link className="btn btn-danger" to="/">Go Back</Link>} />)
-    }
 
     useEffect(() => {
-        getSpecific()
-    }, [])
+        getSpecific(props.match.params.id)
+    }, [props.match.params.id])
 
     return (
         <div>
